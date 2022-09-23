@@ -1,0 +1,22 @@
+
+Logistique :
+ Le stock des 5 produits les plus commandés.
+
+Select productname,sum(quantityOrdered) as "Unité vendue",quantityInStock as "quantité en stock"
+from orderdetails join products on orderdetails.productcode=products.productcode
+group by productname
+Order by sum(quantityOrdered) DESC
+limit 5;
+
+
+Ressources Humaines : 
+Chaque mois, les 2 vendeurs avec le CA le plus élevé.
+
+
+Select salesRepEmployeeNumber, employees.lastname, employees.firstname, sum(payments.amount) as "Chiffre d'affaire"
+from customers join  payments on customers.customerNumber=payments.customerNumber
+join employees on employeeNumber=salesRepEmployeeNumber
+WHERE paymentDate >= Date(NOW() - INTERVAL 2 month)
+Group by salesRepEmployeeNumber
+ORDER  by (payments.amount) Desc
+limit 2;
